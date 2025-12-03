@@ -1,6 +1,3 @@
-<script src="config.js"></script>
-<script src="script.js"></script>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +10,6 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f0f2f5;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='180'%3E%3Ctext x='50%25' y='50%25' font-size='28' fill='rgba(0,0,0,0.04)' font-family='Inter, sans-serif' font-weight='700' text-anchor='middle' dominant-baseline='middle' transform='rotate(-25 125 90)'%3EBanafa%3C/text%3E%3C/svg%3E");
         }
         .card {
             background-color: white;
@@ -184,7 +180,6 @@
                             <th scope="col" class="px-6 py-3 cursor-pointer text-center" data-sort="price">Price</th>
                             <th scope="col" class="px-6 py-3 cursor-pointer text-center" data-sort="change">Change</th>
                             <th scope="col" class="px-6 py-3 cursor-pointer text-center" data-sort="changePercent">% Change</th>
-                            <th scope="col" class="px-6 py-3 cursor-pointer text-center" data-sort="logDate">Log Date</th>
                             <th scope="col" class="px-6 py-3 text-center">Actions</th>
                         </tr>
                     </thead>
@@ -194,7 +189,7 @@
                 </table>
             </div>
         </div>
-        <div class="text-center text-xs text-gray-500 mt-2 md-hidden">
+        <div class="text-center text-xs text-gray-500 mt-2 md:hidden">
             ⟷ Scroll table horizontally ⟷
         </div>
     </div>
@@ -392,33 +387,26 @@
             const savedStocks = localStorage.getItem(stockDataKey);
             if (savedStocks && savedStocks.length > 2) {
                 stocks = JSON.parse(savedStocks);
-                // Add logDate to old data for compatibility
-                stocks.forEach(stock => {
-                    if (!stock.logDate) {
-                        stock.logDate = null; // Use null for legacy items for better display
-                    }
-                });
             } else {
                 // Default list if nothing is saved
-                const now = new Date().toISOString();
                 stocks = [
-                    { symbol: 'ABEO', name: 'Abeona Therapeutics Inc.', price: 5.38, change: -0.26, changePercent: '-4.61%', logDate: now },
-                    { symbol: 'ABVX', name: 'ABVC BioPharma Inc.', price: 82.30, change: -1.01, changePercent: '-1.21%', logDate: now },
-                    { symbol: 'ACAD', name: 'ACADIA Pharmaceuticals Inc.', price: 24.42, change: -0.34, changePercent: '-1.35%', logDate: now },
-                    { symbol: 'ACB', name: 'Aurora Cannabis Inc.', price: 5.09, change: -0.09, changePercent: '-1.74%', logDate: now },
-                    { symbol: 'ACHR', name: 'Archer Aviation Inc.', price: 9.86, change: 0.61, changePercent: '+6.59%', logDate: now },
-                    { symbol: 'AI', name: 'C3.ai Inc.', price: 17.90, change: -0.12, changePercent: '-0.67%', logDate: now },
-                    { symbol: 'AMC', name: 'AMC Entertainment Holdings Inc.', price: 3.01, change: 0.17, changePercent: '+5.99%', logDate: now },
-                    { symbol: 'ARM', name: 'Arm Holdings plc', price: 142.91, change: -3.63, changePercent: '-2.48%', logDate: now },
-                    { symbol: 'GME', name: 'GameStop Corp.', price: 26.08, change: 0.20, changePercent: '+0.77%', logDate: now },
-                    { symbol: 'HOOD', name: 'Robinhood Markets Inc.', price: 124.78, change: 3.87, changePercent: '+3.20%', logDate: now },
-                    { symbol: 'IONQ', name: 'IonQ Inc.', price: 70.41, change: 3.60, changePercent: '+5.39%', logDate: now },
-                    { symbol: 'LCID', name: 'Lucid Group Inc.', price: 21.10, change: 0.60, changePercent: '+2.93%', logDate: now },
-                    { symbol: 'PLTR', name: 'Palantir Technologies Inc.', price: 182.39, change: 5.42, changePercent: '+3.06%', logDate: now },
-                    { symbol: 'RIVN', name: 'Rivian Automotive Inc.', price: 14.38, change: -0.30, changePercent: '-2.04%', logDate: now },
-                    { symbol: 'SOFI', name: 'SoFi Technologies Inc.', price: 29.51, change: 1.40, changePercent: '+4.98%', logDate: now },
-                    { symbol: 'SOUN', name: 'SoundHound AI Inc.', price: 16.25, change: 0.62, changePercent: '+3.97%', logDate: now },
-                    { symbol: 'U', name: 'Unity Software Inc.', price: 46.05, change: 0.60, changePercent: '+1.32%', logDate: now }
+                    { symbol: 'ABEO', name: 'Abeona Therapeutics Inc.', price: 5.38, change: -0.26, changePercent: '-4.61%' },
+                    { symbol: 'ABVX', name: 'ABVC BioPharma Inc.', price: 82.30, change: -1.01, changePercent: '-1.21%' },
+                    { symbol: 'ACAD', name: 'ACADIA Pharmaceuticals Inc.', price: 24.42, change: -0.34, changePercent: '-1.35%' },
+                    { symbol: 'ACB', name: 'Aurora Cannabis Inc.', price: 5.09, change: -0.09, changePercent: '-1.74%' },
+                    { symbol: 'ACHR', name: 'Archer Aviation Inc.', price: 9.86, change: 0.61, changePercent: '+6.59%' },
+                    { symbol: 'AI', name: 'C3.ai Inc.', price: 17.90, change: -0.12, changePercent: '-0.67%' },
+                    { symbol: 'AMC', name: 'AMC Entertainment Holdings Inc.', price: 3.01, change: 0.17, changePercent: '+5.99%' },
+                    { symbol: 'ARM', name: 'Arm Holdings plc', price: 142.91, change: -3.63, changePercent: '-2.48%' },
+                    { symbol: 'GME', name: 'GameStop Corp.', price: 26.08, change: 0.20, changePercent: '+0.77%' },
+                    { symbol: 'HOOD', name: 'Robinhood Markets Inc.', price: 124.78, change: 3.87, changePercent: '+3.20%' },
+                    { symbol: 'IONQ', name: 'IonQ Inc.', price: 70.41, change: 3.60, changePercent: '+5.39%' },
+                    { symbol: 'LCID', name: 'Lucid Group Inc.', price: 21.10, change: 0.60, changePercent: '+2.93%' },
+                    { symbol: 'PLTR', name: 'Palantir Technologies Inc.', price: 182.39, change: 5.42, changePercent: '+3.06%' },
+                    { symbol: 'RIVN', name: 'Rivian Automotive Inc.', price: 14.38, change: -0.30, changePercent: '-2.04%' },
+                    { symbol: 'SOFI', name: 'SoFi Technologies Inc.', price: 29.51, change: 1.40, changePercent: '+4.98%' },
+                    { symbol: 'SOUN', name: 'SoundHound AI Inc.', price: 16.25, change: 0.62, changePercent: '+3.97%' },
+                    { symbol: 'U', name: 'Unity Software Inc.', price: 46.05, change: 0.60, changePercent: '+1.32%' }
                 ];
             }
         }
@@ -428,11 +416,10 @@
             loadingModal.querySelector('p').textContent = 'AI is analyzing your screenshot for stocks...';
             loadingModal.classList.remove('hidden');
             
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-
+            // Calls Vercel Serverless Function /api/generate
             const prompt = `Analyze the provided screenshot of a stock watchlist or financial website. Extract ALL stock symbols, company names, and their current prices. Return a JSON array of objects, where each object has keys: "symbol", "name", and "price". The price should be a number. If no stocks are found, return an empty array.`;
-
+            
+            // We use the same structure Gemini expects, but send it to our own backend
             const payload = {
                 contents: [{ parts: [ { text: prompt }, { inlineData: { mimeType: "image/png", data: base64ImageData } } ] }],
                 generationConfig: {
@@ -452,7 +439,13 @@
             };
             
             try {
-                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                // Point to your Vercel function
+                const response = await fetch('/api/generate', { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify(payload) 
+                });
+
                 if (!response.ok) throw new Error(`API error: ${response.status}`);
                 const result = await response.json();
                 
@@ -465,7 +458,7 @@
                 }
             } catch (error) {
                 console.error('Error during AI extraction:', error);
-                displayUploadPreview({ validStocks: [], errors: ["The AI could not identify any stocks in the image. Please try a clearer screenshot."] });
+                displayUploadPreview({ validStocks: [], errors: ["The AI could not identify any stocks in the image. Please try a clearer screenshot. Note: This feature only works on the deployed Vercel app."] });
             } finally {
                 loadingModal.classList.add('hidden');
             }
@@ -475,10 +468,8 @@
             analystLoading.classList.remove('hidden');
             analystForm.classList.add('hidden');
 
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-
-            const systemPrompt = "You are a world-class financial analyst named 'Banafa's Tool'. Provide concise, insightful, easy-to-understand analysis on stocks using real-time search data. Format answers with markdown (bolding, bullet points). Start with a brief, friendly greeting.";
+            // Calls Vercel Serverless Function /api/generate
+            const systemPrompt = "You are a world-class financial analyst named 'Gem'. Provide concise, insightful, easy-to-understand analysis on stocks using real-time search data. Format answers with markdown (bolding, bullet points). Start with a brief, friendly greeting.";
             
             const payload = {
                 contents: [{ parts: [{ text: query }] }],
@@ -487,14 +478,20 @@
             };
 
             try {
-                const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                // Point to your Vercel function
+                const response = await fetch('/api/generate', { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify(payload) 
+                });
+
                 if (!response.ok) throw new Error(`API call failed: ${response.statusText}`);
                 const result = await response.json();
                 const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
                 appendMessage(text || "I'm sorry, I couldn't find a clear answer for that. Please try another question.", 'ai');
             } catch (error) {
                 console.error('Error during AI analysis:', error);
-                appendMessage(`There was an error: ${error.message}`, 'ai');
+                appendMessage(`There was an error: ${error.message} (Note: This feature only works on the deployed Vercel app)`, 'ai');
             } finally {
                 analystLoading.classList.add('hidden');
                 analystForm.classList.remove('hidden');
@@ -606,28 +603,10 @@
         }
 
         // --- Table Rendering and Logic ---
-        function formatLogDate(isoString) {
-            if (!isoString) {
-                return 'N/A';
-            }
-            const date = new Date(isoString);
-            if (isNaN(date.getTime())) {
-                return 'N/A'; // Handles invalid date strings gracefully in all browsers
-            }
-
-            const dateOptions = { year: '2-digit', month: 'numeric', day: 'numeric' };
-            const timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
-
-            const datePart = date.toLocaleDateString(undefined, dateOptions);
-            const timePart = date.toLocaleTimeString([], timeOptions); // Use [] for default locale which is more robust
-
-            return `${datePart}<br>${timePart}`;
-        }
-
         function renderTable() {
             stockTableBody.innerHTML = '';
             if (filteredStocks.length === 0) {
-                 stockTableBody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-gray-500">No matching stocks found.</td></tr>`;
+                 stockTableBody.innerHTML = `<tr><td colspan="7" class="text-center py-10 text-gray-500">No matching stocks found.</td></tr>`;
                  return;
             }
             filteredStocks.forEach(stock => {
@@ -637,7 +616,6 @@
                 row.dataset.symbol = stock.symbol;
 
                 const changeColor = stock.change >= 0 ? 'text-green-600' : 'text-red-600';
-                const formattedLogDate = formatLogDate(stock.logDate);
                 
                 row.innerHTML = `
                     <td class="px-6 py-4">
@@ -650,7 +628,6 @@
                     <td class="px-6 py-4 text-center font-medium">${stock.price.toFixed(2)}</td>
                     <td class="px-6 py-4 text-center ${changeColor}">${stock.change.toFixed(2)}</td>
                     <td class="px-6 py-4 text-center ${changeColor}">${stock.changePercent}</td>
-                    <td class="px-6 py-4 text-center text-xs leading-tight">${formattedLogDate}</td>
                     <td class="px-6 py-4 text-center">
                         <div class="flex justify-center items-center space-x-2">
                             <button title="AI Analyst" data-action="analyze" class="p-1 text-yellow-500 hover:text-yellow-700">
@@ -741,15 +718,13 @@
                 const existingSymbols = new Set(stocks.map(s => s.symbol));
                 const newStocks = parsedBulkStocks.filter(s => !existingSymbols.has(s.symbol));
                 
-                const now = new Date().toISOString();
                 newStocks.forEach(stock => {
                     stocks.unshift({
                         symbol: stock.symbol,
                         name: stock.name,
                         price: stock.price,
                         change: 0,
-                        changePercent: '0.00%',
-                        logDate: now
+                        changePercent: '0.00%'
                     });
                 });
 
@@ -905,7 +880,7 @@
             const name = document.getElementById('addName').value;
             const price = parseFloat(document.getElementById('addPrice').value);
             if (symbol && name && !isNaN(price)) {
-                stocks.unshift({ symbol, name, price, change: 0, changePercent: '0.00%', logDate: new Date().toISOString() });
+                stocks.unshift({ symbol, name, price, change: 0, changePercent: '0.00%' });
                 saveStocks();
                 addModal.classList.add('hidden');
                 addForm.reset();
@@ -930,7 +905,6 @@
                     stockToEdit.symbol = newSymbol;
                     stockToEdit.name = newName;
                     stockToEdit.price = newPrice;
-                    stockToEdit.logDate = new Date().toISOString();
                     saveStocks();
                 }
                 editModal.classList.add('hidden');
